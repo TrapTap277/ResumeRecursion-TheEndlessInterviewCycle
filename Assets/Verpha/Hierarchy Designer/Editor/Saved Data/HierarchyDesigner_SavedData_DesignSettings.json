@@ -1,0 +1,47 @@
+{
+    "ComponentIconsSize": 0.800000011920929,
+    "ComponentIconsSpacing": 1.0,
+    "ComponentIconsOffset": 15,
+    "HierarchyTreeColor": {
+        "r": 0.3529411852359772,
+        "g": 0.3294117748737335,
+        "b": 0.5215686559677124,
+        "a": 1.0
+    },
+    "TagColor": {
+        "r": 1.0,
+        "g": 1.0,
+        "b": 1.0,
+        "a": 1.0
+    },
+    "TagTextAnchor": 5,
+    "TagFontStyle": 3,
+    "TagFontSize": 13,
+    "LayerColor": {
+        "r": 0.5568627715110779,
+        "g": 0.6235294342041016,
+        "b": 0.8352941274642944,
+        "a": 1.0
+    },
+    "LayerTextAnchor": 5,
+    "LayerFontStyle": 3,
+    "LayerFontSize": 9,
+    "TagLayerOffset": 5,
+    "TagLayerSpacing": 5,
+    "HierarchyLineThickness": 1,
+    "HierarchyLineColor": {
+        "r": 0.5568627715110779,
+        "g": 0.6235294342041016,
+        "b": 0.8352941274642944,
+        "a": 0.501960813999176
+    },
+    "LockColor": {
+        "r": 0.5568627715110779,
+        "g": 0.6235294342041016,
+        "b": 0.8352941274642944,
+        "a": 1.0
+    },
+    "LockTextAnchor": 4,
+    "LockFontStyle": 3,
+    "LockFontSize": 11
+}
