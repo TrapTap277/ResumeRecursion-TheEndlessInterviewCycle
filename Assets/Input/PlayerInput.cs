@@ -62,6 +62,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Run"",
+                    ""type"": ""Button"",
+                    ""id"": ""88c8a8e6-1c7b-4ef9-8be7-7841de9f21e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shifting"",
+                    ""type"": ""Button"",
+                    ""id"": ""1c69a02a-30fa-479d-a2dd-834672975aa6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +170,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5a5fd7e-0fc8-46c9-b119-5e0eb90ae20b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""258a780f-8a00-4453-909d-6b1c7681befa"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shifting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,6 +221,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Main_Jump = m_Main.FindAction("Jump", throwIfNotFound: true);
         m_Main_Attack = m_Main.FindAction("Attack", throwIfNotFound: true);
         m_Main_Look = m_Main.FindAction("Look", throwIfNotFound: true);
+        m_Main_Run = m_Main.FindAction("Run", throwIfNotFound: true);
+        m_Main_Shifting = m_Main.FindAction("Shifting", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -246,6 +288,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Main_Jump;
     private readonly InputAction m_Main_Attack;
     private readonly InputAction m_Main_Look;
+    private readonly InputAction m_Main_Run;
+    private readonly InputAction m_Main_Shifting;
     public struct MainActions
     {
         private @PlayerInput m_Wrapper;
@@ -254,6 +298,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Main_Jump;
         public InputAction @Attack => m_Wrapper.m_Main_Attack;
         public InputAction @Look => m_Wrapper.m_Main_Look;
+        public InputAction @Run => m_Wrapper.m_Main_Run;
+        public InputAction @Shifting => m_Wrapper.m_Main_Shifting;
         public InputActionMap Get() { return m_Wrapper.m_Main; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -275,6 +321,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Run.started += instance.OnRun;
+            @Run.performed += instance.OnRun;
+            @Run.canceled += instance.OnRun;
+            @Shifting.started += instance.OnShifting;
+            @Shifting.performed += instance.OnShifting;
+            @Shifting.canceled += instance.OnShifting;
         }
 
         private void UnregisterCallbacks(IMainActions instance)
@@ -291,6 +343,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Run.started -= instance.OnRun;
+            @Run.performed -= instance.OnRun;
+            @Run.canceled -= instance.OnRun;
+            @Shifting.started -= instance.OnShifting;
+            @Shifting.performed -= instance.OnShifting;
+            @Shifting.canceled -= instance.OnShifting;
         }
 
         public void RemoveCallbacks(IMainActions instance)
@@ -323,5 +381,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnRun(InputAction.CallbackContext context);
+        void OnShifting(InputAction.CallbackContext context);
     }
 }
