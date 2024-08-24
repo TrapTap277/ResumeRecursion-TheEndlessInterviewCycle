@@ -130,7 +130,7 @@ public class SceneAnnotationEditor : Editor
 
     /// <summary>
     ///     Select the next or previous SceneAnnotation in the scene and
-    ///     move the camera to match it's orientation
+    ///     enemyMove the camera to match it's orientation
     /// </summary>
     /// <param name="delta">1 for next annotation, -1 for the previous one</param>
     private void GoToAnnotation(int delta)
