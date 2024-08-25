@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace _Scripts.Enemy
 {
-    public class CrabMove : MonoBehaviour, IEnemyMove
+    public class CrabChasing : MonoBehaviour, IEnemyMove
     {
         private InputReader _player;
 
@@ -14,7 +14,9 @@ namespace _Scripts.Enemy
 
         private Animator _animator;
 
-        private const string MOVE_ANIMATION = "Walk";
+        private const string MOVE_ANIMATION = "Chasing";
+
+        private IEnemyMove _moveType;
 
         private void Awake()
         {
@@ -23,17 +25,11 @@ namespace _Scripts.Enemy
             _player = FindObjectOfType<InputReader>();
         }
 
-        private void Start()
-        {
-            _navMeshAgent.speed = SPEED;
-        }
-
         public void Move()
         {
-            _navMeshAgent.speed = SPEED;
-            
             var animationSwitcher = new AnimationSwitcher.AnimationSwitcher(_animator, MOVE_ANIMATION);
             animationSwitcher.SwitchAnimation();
+            _navMeshAgent.speed = SPEED;
             _navMeshAgent.SetDestination(_player.gameObject.transform.position);
         }
     }

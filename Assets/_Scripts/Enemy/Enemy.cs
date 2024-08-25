@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Scripts.Enemy
 {
@@ -10,7 +11,7 @@ namespace _Scripts.Enemy
         private IDie _die;
 
         private float _timeToAttack;
-        private string _player = "Player";
+        private const string PLAYER = "Player";
 
         private bool _isMoving;
 
@@ -44,11 +45,10 @@ namespace _Scripts.Enemy
 
         private void OnTriggerStay(Collider other)
         {
-            if (_timeToAttack <= 0 && other.CompareTag(_player))
+            if (_timeToAttack <= 0 && other.CompareTag(PLAYER))
             {
                 _isMoving = false;
-                Attack();
-                _timeToAttack = Random.Range(5, 10);
+                _timeToAttack = Random.Range(3, 5);
             }
 
             if (_timeToAttack > 0)
@@ -60,7 +60,8 @@ namespace _Scripts.Enemy
 
         private IEnumerator RestoreMoving()
         {
-            yield return new WaitForSeconds(0.6f);
+            Attack();
+            yield return new WaitForSeconds(1f);
             _isMoving = true;
         }
     }

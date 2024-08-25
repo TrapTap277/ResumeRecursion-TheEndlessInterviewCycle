@@ -9,11 +9,11 @@ namespace _Scripts.Player
 
         private float _xRotation;
 
-        // private void Start()
-        // {
-        //     Cursor.lockState = CursorLockMode.Locked;
-        //     Cursor.visible = false;
-        // }
+        private void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         public void Move(Vector2 direction)
         {

@@ -2,6 +2,6 @@
 {
     public abstract class EnemyCreator
     {
-        public abstract Enemy CreateEnemy();
+        public abstract EnemyStateMachine CreateEnemy();
     }
 }
