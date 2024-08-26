@@ -2462,7 +2462,7 @@ GameObject:
   - component: {fileID: 5111647233266804707}
   - component: {fileID: 1636176143384974880}
   m_Layer: 0
-  m_Name: Red_Crab
+  m_Name: Bug_Crub
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
