@@ -16,7 +16,7 @@ namespace _Scripts.AnimationSwitcher
 
         public void SwitchAnimation()
         {
-            _animator.CrossFade(_animationName, 0);
+            _animator.CrossFade(_animationName, 1);
         }
         
         private void ConvertToHash(string animationName)

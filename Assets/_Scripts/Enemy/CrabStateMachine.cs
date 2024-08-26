@@ -1,24 +1,21 @@
-﻿using System;
-using _Scripts.Player;
+﻿using _Scripts.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace _Scripts.Enemy
 {
-    public class EnemyStateMachine : MonoBehaviour
+    public class CrabStateMachine : MonoBehaviour
     {
-        public readonly EnemyAttacking Attacking = new EnemyAttacking();
-        public readonly EnemyChasing Chasing = new EnemyChasing();
-        public readonly EnemyPatrolling Patrolling = new EnemyPatrolling();
-        public readonly EnemyDying Dying = new EnemyDying();
+        public readonly CrabAttacking Attacking = new CrabAttacking();
+        public readonly CrabChasing Chasing = new CrabChasing();
+        public readonly CrabPatrolling Patrolling = new CrabPatrolling();
+        public readonly CrabDying Dying = new CrabDying();
+        
+        private CrabBaseState _currentState;
 
         [HideInInspector] public InputReader player;
-
         [HideInInspector] public NavMeshAgent navMeshAgent;
-
         [HideInInspector] public Animator animator;
-
-        private EnemyBaseState _currentState;
 
         private void Start()
         {
@@ -35,7 +32,7 @@ namespace _Scripts.Enemy
             _currentState.Update(this);
         }
 
-        public void SwitchState(EnemyBaseState baseState)
+        public void SwitchState(CrabBaseState baseState)
         {
             _currentState.Exit(this);
             _currentState = baseState;
@@ -44,13 +41,13 @@ namespace _Scripts.Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            if(!other.gameObject.CompareTag("Player")) return;
+            if (!other.gameObject.CompareTag("Player")) return;
             if (_currentState != Dying) SwitchState(Attacking);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if(!other.gameObject.CompareTag("Player")) return;
+            if (!other.gameObject.CompareTag("Player")) return;
             if (_currentState != Dying) SwitchState(Chasing);
         }
     }

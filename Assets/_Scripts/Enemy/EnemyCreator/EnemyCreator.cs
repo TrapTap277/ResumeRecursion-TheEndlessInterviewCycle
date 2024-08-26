@@ -2,6 +2,8 @@
 {
     public abstract class EnemyCreator
     {
-        public abstract EnemyStateMachine CreateEnemy();
+        public abstract CrabStateMachine CreateCrabEnemy();
+        public abstract GolemStateMachine CreateGolemEnemy();
+        public abstract WatcherStateMachine CreateWatcherEnemy();
     }
 }

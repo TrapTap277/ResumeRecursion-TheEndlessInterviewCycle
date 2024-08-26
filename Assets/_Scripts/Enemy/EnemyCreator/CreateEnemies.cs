@@ -21,7 +21,13 @@ namespace _Scripts.Enemy.EnemyCreator
             {
                 yield return new WaitForSeconds(Random.Range(1, 3));
                 SetEnemyCreator();
-                var enemy = _creator.CreateEnemy();
+                var random = Random.Range(0, 3);
+
+                if (random == 0) _creator.CreateCrabEnemy();
+
+                if (random == 1) _creator.CreateGolemEnemy();
+
+                if (random == 2) _creator.CreateWatcherEnemy();
             }
         }
 
@@ -35,9 +41,9 @@ namespace _Scripts.Enemy.EnemyCreator
                 {
                     var randomCrab = SetRandom();
                     if (randomCrab == 0)
-                        _creator = new RedCrabCreator();
+                        _creator = new BugEnemyCreator();
                     else
-                        _creator = new StrangeCrabCreator();
+                        _creator = new DefaultEnemyCreator();
                     break;
                 }
             }
