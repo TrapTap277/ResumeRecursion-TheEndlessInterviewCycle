@@ -2,17 +2,16 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace _Scripts.Enemy
+namespace _Scripts.Enemy.StateLogic
 {
-    
-    public class WatcherStateMachine : MonoBehaviour
+    public class GolemStateMachine : MonoBehaviour
     {
-        public readonly WatcherAttacking Attacking = new WatcherAttacking();
-        public readonly WatcherChasing Chasing = new WatcherChasing();
-        public readonly WatcherPatrolling Patrolling = new WatcherPatrolling();
-        public readonly WatcherDying Dying = new WatcherDying();
+        public readonly GolemAttacking Attacking = new GolemAttacking();
+        public readonly GolemChasing Chasing = new GolemChasing();
+        public readonly GolemPatrolling Patrolling = new GolemPatrolling();
+        public readonly GolemDying Dying = new GolemDying();
         
-        private WatcherBaseState _currentState;
+        private GolemBaseState _currentState;
 
         [HideInInspector] public InputReader player;
         [HideInInspector] public NavMeshAgent navMeshAgent;
@@ -33,7 +32,7 @@ namespace _Scripts.Enemy
             _currentState.Update(this);
         }
 
-        public void SwitchState(WatcherBaseState baseState)
+        public void SwitchState(GolemBaseState baseState)
         {
             _currentState.Exit(this);
             _currentState = baseState;
@@ -44,6 +43,8 @@ namespace _Scripts.Enemy
         {
             if (!other.gameObject.CompareTag("Player")) return;
             if (_currentState != Dying) SwitchState(Attacking);
+            
+            Debug.LogError("entered");
         }
 
         private void OnTriggerExit(Collider other)
