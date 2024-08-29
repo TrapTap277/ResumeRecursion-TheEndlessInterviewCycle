@@ -1,58 +1,52 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace _Scripts.Enemy.EnemyCreator
 {
     public class CreateEnemies : MonoBehaviour
     {
         private EnemyType _type;
+        private EnemySpecific _specific;
         private EnemyCreator _creator;
 
         private void Start()
         {
             _type = EnemyType.Crab;
-
+            _specific = EnemySpecific.Default;
             StartCoroutine(Create());
         }
 
         private IEnumerator Create()
         {
+            // yield return null;
+            // SetEnemyCreator();
+            // _creator.Create(EnemyType.Crab);
             for (var i = 0; i < 3; i++)
             {
+                _type = (EnemyType) i;
                 yield return new WaitForSeconds(Random.Range(1, 3));
                 SetEnemyCreator();
-                var random = Random.Range(0, 3);
-
-                if (random == 0) _creator.CreateCrabEnemy();
-
-                if (random == 1) _creator.CreateGolemEnemy();
-
-                if (random == 2) _creator.CreateWatcherEnemy();
+                _creator.Create(_type);
             }
         }
 
         private void SetEnemyCreator()
         {
-            switch (_type)
+            switch (_specific)
             {
-                case EnemyType.None:
-                    break;
-                case EnemyType.Crab:
+                case EnemySpecific.None: break;
+                case EnemySpecific.Default:
                 {
-                    var randomCrab = SetRandom();
-                    if (randomCrab == 0)
-                        _creator = new BugEnemyCreator();
-                    else
-                        _creator = new DefaultEnemyCreator();
+                    _creator = new DefaultEnemyCreator();
                     break;
                 }
+                case EnemySpecific.Bug:
+                    _creator = new BugEnemyCreator();
+                    break;
+                default: throw new ArgumentOutOfRangeException();
             }
-        }
-
-        private static int SetRandom()
-        {
-            var randomCrab = Random.Range(0, 2);
-            return randomCrab;
         }
     }
 }

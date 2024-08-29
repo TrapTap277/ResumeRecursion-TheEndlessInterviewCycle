@@ -1,36 +1,33 @@
-﻿using UnityEngine;
+﻿using _Scripts.Enemy.AttackLogic;
+using _Scripts.Enemy.StateLogic;
+using UnityEngine;
 
 namespace _Scripts.Enemy.EnemyCreator
 {
     public class BugEnemyCreator : EnemyCreator
     {
-        private const string BUG_CRAB_PATH = "Prefabs/Bug_Crub";
-        private const string BUG_GOLEM_PATH = "Prefabs/Golem_Bug";
-        private const string BUG_WATCHER_PATH = "Prefabs/Watcher_Bug";
-
-        public override CrabStateMachine CreateCrabEnemy()
+        protected override GameObject CreateCrabEnemy()
         {
-            var newCrab = Resources.Load<GameObject>(BUG_CRAB_PATH);
-            var crab = Object.Instantiate(newCrab);
-            var crabComponent = crab.AddComponent<CrabStateMachine>();
-            return crabComponent;
+            var newCrab = Object.Instantiate(Resources.Load<GameObject>(CRAB_PATH));
+            newCrab.AddComponent<CrabStateMachine>();
+            SetupEnemy(newCrab, newCrab.GetComponent<EnemyAttack>());
+            return newCrab;
         }
 
-        public override GolemStateMachine CreateGolemEnemy()
+        protected override GameObject CreateGolemEnemy()
         {
-            var newCrab = Resources.Load<GameObject>(BUG_GOLEM_PATH);
-
-            var golem = Object.Instantiate(newCrab);
-            var golemComponent = golem.AddComponent<GolemStateMachine>();
-            return golemComponent;
+            var newGolem = Object.Instantiate(Resources.Load<GameObject>(GOLEM_PATH));
+            newGolem.AddComponent<GolemStateMachine>();
+            SetupEnemy(newGolem, newGolem.GetComponent<EnemyAttack>());
+            return newGolem;
         }
 
-        public override WatcherStateMachine CreateWatcherEnemy()
+        protected override GameObject CreateWatcherEnemy()
         {
-            var newCrab = Resources.Load<GameObject>(BUG_WATCHER_PATH);
-            var watcher = Object.Instantiate(newCrab);
-            var watcherComponent = watcher.AddComponent<WatcherStateMachine>();
-            return watcherComponent;
+            var newWatcher = Object.Instantiate(Resources.Load<GameObject>(WATCHER_PATH));
+            newWatcher.AddComponent<WatcherStateMachine>();
+            SetupEnemy(newWatcher, newWatcher.GetComponent<EnemyAttack>());
+            return newWatcher;
         }
     }
 }
