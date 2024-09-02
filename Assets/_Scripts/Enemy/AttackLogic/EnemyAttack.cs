@@ -21,8 +21,6 @@ namespace _Scripts.Enemy.AttackLogic
 
         public void Attack()
         {
-            Debug.Log("Take damage");
-
             var forward = transform.forward;
             var capsuleStart = transform.position + Vector3.up + forward * Enemy.attackRadius;
             var capsuleEnd = capsuleStart + forward * (Enemy.attackRange - Enemy.attackRadius * 2);
@@ -32,14 +30,7 @@ namespace _Scripts.Enemy.AttackLogic
 
             if (hits.Length > 0)
             {
-                Debug.Log("Player in attack range. Taking damage.");
                 Player.TakeDamage(Enemy.damage);
-            }
-
-            else
-
-            {
-                Debug.Log("Player not in attack range.");
             }
         }
 

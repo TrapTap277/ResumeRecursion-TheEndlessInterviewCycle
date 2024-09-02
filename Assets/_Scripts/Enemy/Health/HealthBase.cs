@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace _Scripts.Enemy.Health
 {
-    public abstract class HealthBase : MonoBehaviour, IShow, IInitializable
+    public abstract class HealthBase : MonoBehaviour, IShow
     {
         public static event Action<float> OnChangedDamage;
         public static event Action<bool> OnDied;
@@ -27,6 +27,11 @@ namespace _Scripts.Enemy.Health
         private float _didDamage;
         private float _lerpTimer;
         private bool _isHasProtection;
+
+        private void Awake()
+        {
+            Initialize();
+        }
 
         public void Initialize()
         {

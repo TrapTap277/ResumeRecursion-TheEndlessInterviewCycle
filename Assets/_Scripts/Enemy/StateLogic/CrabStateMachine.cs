@@ -43,7 +43,6 @@ namespace _Scripts.Enemy.StateLogic
         {
             if (!other.gameObject.CompareTag("Player")) return;
             if (_currentState != Dying) SwitchState(Attacking);
-            Debug.LogError("entered");
         }
 
         private void OnTriggerExit(Collider other)
@@ -52,7 +51,6 @@ namespace _Scripts.Enemy.StateLogic
             {
                 if (_currentState != Dying)
                 {
-                    Debug.LogError("exited");
                     SwitchState(Chasing);
                 }
             }

@@ -20,9 +20,6 @@ namespace _Scripts.Enemy.EnemyCreator
 
         private IEnumerator Create()
         {
-            // yield return null;
-            // SetEnemyCreator();
-            // _creator.Create(EnemyType.Crab);
             for (var i = 0; i < 3; i++)
             {
                 _type = (EnemyType) i;
