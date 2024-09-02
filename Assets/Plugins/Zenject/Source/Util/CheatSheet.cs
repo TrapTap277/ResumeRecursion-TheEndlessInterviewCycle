@@ -97,19 +97,12 @@ namespace Zenject
 
         IFoo GetRandomFoo(InjectContext ctx)
         {
-            switch (Random.Range(0, 3))
+            return Random.Range(0, 3) switch
             {
-                case 0:
-                {
-                    return ctx.Container.Instantiate<Foo1>();
-                }
-                case 1:
-                {
-                    return ctx.Container.Instantiate<Foo2>();
-                }
-            }
-
-            return ctx.Container.Instantiate<Foo3>();
+                0 => ctx.Container.Instantiate<Foo1>(),
+                1 => ctx.Container.Instantiate<Foo2>(),
+                _ => ctx.Container.Instantiate<Foo3>()
+            };
         }
 
         void InstallMore()
@@ -282,8 +275,8 @@ namespace Zenject
             Container.Bind<Bar>().WithId("Bar2").AsCached();
 
             // Here we use the 'ParentContexts' property of inject context to sync multiple corresponding identifiers
-            Container.BindInstance(foo1).When(c => c.ParentContexts.Where(x => x.MemberType == typeof(Bar) && Equals(x.Identifier, "Bar1")).Any());
-            Container.BindInstance(foo2).When(c => c.ParentContexts.Where(x => x.MemberType == typeof(Bar) && Equals(x.Identifier, "Bar2")).Any());
+            Container.BindInstance(foo1).When(c => c.ParentContexts.Any(x => x.MemberType == typeof(Bar) && Equals(x.Identifier, "Bar1")));
+            Container.BindInstance(foo2).When(c => c.ParentContexts.Any(x => x.MemberType == typeof(Bar) && Equals(x.Identifier, "Bar2")));
 
             // This results in:
             Assert.That(Container.ResolveId<Bar>("Bar1").Foo == foo1);

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Zenject
 {
     public interface IFactory
@@ -11,7 +13,7 @@ namespace Zenject
 
     public interface IFactory<in TParam1, out TValue> : IFactory
     {
-        TValue Create(TParam1 param);
+        TValue  Create(TParam1 param);
     }
 
     public interface IFactory<in TParam1, in TParam2, out TValue> : IFactory
