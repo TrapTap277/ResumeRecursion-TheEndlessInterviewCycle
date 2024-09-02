@@ -1,5 +1,4 @@
-﻿using _Scripts.Enemy.EnemyCreator;
-using _Scripts.Enemy.SO;
+﻿using _Scripts.Enemy.SO;
 using UnityEngine;
 using Zenject;
 
@@ -11,7 +10,6 @@ namespace _Scripts.Installers
 
         public override void InstallBindings()
         {
-            
         }
     }
 }

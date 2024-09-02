@@ -1,34 +1,44 @@
-﻿using UnityEngine;
+﻿using _Scripts.Enemy.Health;
+using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Scripts.Player
 {
     public class InputInstaller : MonoInstaller
     {
-        [SerializeField] private JumpBehaviour jumpBehaviour;
-        [SerializeField] private ShiftingBehaviour shiftingBehaviour;
-        [SerializeField] private WalkBehaviour walkBehaviour;
-        [SerializeField] private RunBehaviour runBehaviour;
-        [SerializeField] private CameraLook cameraLook;
-        [SerializeField] private AttackBehaviour attackBehaviour;
-        private const string SHIFTING_ID = "Shifting";
-        private const string MOVE_ID = "Move";
-        private const string RUN_ID = "Run";
-        private const string CAMERA_ID = "Camera";
-
+        [FormerlySerializedAs("_playerConfig")] [SerializeField] private PlayerConfig playerConfig;
+        
         public override void InstallBindings()
         {
-            Container.Bind<IJump>().To<JumpBehaviour>().FromInstance(jumpBehaviour).AsSingle();
+            Container.Bind<IJump>().To<JumpBehaviour>().FromInstance(playerConfig.jumpBehaviour).AsSingle();
             Container.Bind<IMove>()
-                .WithId(SHIFTING_ID)
+                .WithId(playerConfig.shiftingID)
                 .To<ShiftingBehaviour>()
-                .FromInstance(shiftingBehaviour)
+                .FromInstance(playerConfig.shiftingBehaviour)
                 .AsSingle();
-            Container.Bind<IMove>().WithId(MOVE_ID).To<WalkBehaviour>().FromInstance(walkBehaviour).AsSingle();
-            Container.Bind<IMove>().WithId(RUN_ID).To<RunBehaviour>().FromInstance(runBehaviour).AsSingle();
-            Container.Bind<IMove>().WithId(CAMERA_ID).To<CameraLook>().FromInstance(cameraLook).AsSingle();
-            Container.Bind<IAttack>().To<AttackBehaviour>().FromInstance(attackBehaviour).AsSingle();
+            Container.Bind<IMove>().WithId(playerConfig.moveID).To<WalkBehaviour>().FromInstance(playerConfig.walkBehaviour).AsSingle();
+            Container.Bind<IMove>().WithId(playerConfig.runID).To<RunBehaviour>().FromInstance(playerConfig.runBehaviour).AsSingle();
+            Container.Bind<IMove>().WithId(playerConfig.cameraID).To<CameraLook>().FromInstance(playerConfig.cameraLook).AsSingle();
+            Container.Bind<IAttack>().To<AttackBehaviour>().FromInstance(playerConfig.attackBehaviour).AsSingle();
             Container.Bind<InputReader>().AsSingle();
+
+            //
+            //
+            //
+            //
+            //
+            // Container.Bind<IJump>().To<JumpBehaviour>().FromComponentInHierarchy().AsSingle();
+            // Container.Bind<IMove>()
+            //     .WithId(playerConfig.shiftingID)
+            //     .To<ShiftingBehaviour>()
+            //     .FromComponentInHierarchy()
+            //     .AsSingle();
+            // Container.Bind<IMove>().WithId(playerConfig.moveID).To<WalkBehaviour>().FromComponentInHierarchy().AsSingle();
+            // Container.Bind<IMove>().WithId(playerConfig.runID).To<RunBehaviour>().FromComponentInHierarchy().AsSingle();
+            // Container.Bind<IMove>().WithId(playerConfig.cameraID).To<CameraLook>().FromComponentInHierarchy().AsSingle();
+            // Container.Bind<IAttack>().To<AttackBehaviour>().FromComponentInHierarchy().AsSingle();
+            // Container.Bind<InputReader>().AsSingle();
         }
     }
 }
