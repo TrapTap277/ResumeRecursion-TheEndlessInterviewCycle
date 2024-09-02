@@ -1,33 +1,74 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace _Scripts.Bug
 {
     public class FixBug : MonoBehaviour, IFix
     {
-        public static event Action<float> FixingBug;
-        public static event Action FixedBug;
+        public static event Action<float> OnFixingBug;
+        public event Action OnFixedBug;
 
-        private float _bugLifeTime = 20;
+        [SerializeField] private float bugLifeTime = 20;
 
-        public async void Fix()
+        private float BugLifeTime
         {
-            if (gameObject == null) return;
-
-            if (_bugLifeTime > 0)
+            get => bugLifeTime;
+            set
             {
-                Debug.Log(_bugLifeTime);
-                _bugLifeTime -= Time.deltaTime;
-                FixingBug?.Invoke(_bugLifeTime);
-                await Task.Yield();
+                bugLifeTime = value;
+                if (bugLifeTime <= 0) FixedBug();
+            }
+        }
+
+        private void Start()
+        {
+            BugLifeTime = 20;
+        }
+
+        public void Fix()
+        {
+            StartCoroutine(FixWithTime());
+        }
+
+        private IEnumerator FixWithTime()
+        {
+            if (gameObject == null) yield return null;
+            if (BugLifeTime > 0)
+            {
+                FixingBug();
+                yield return null;
+            }
+        }
+
+        private void FixedBug()
+        {
+            OnFixedBug?.Invoke();
+            Destroy(gameObject);
+        }
+
+        private void FixingBug()
+        {
+            BugLifeTime -= Time.deltaTime;
+            OnFixingBug?.Invoke(BugLifeTime);
+        }
+
+        public class Factory : PlaceholderFactory<Vector3, Quaternion, Transform, FixBug>
+        {
+            private readonly DiContainer _container;
+            private readonly GameObject _bugPrefab;
+
+            public Factory(DiContainer container, GameObject bugPrefab)
+            {
+                _container = container;
+                _bugPrefab = bugPrefab;
             }
 
-            if (_bugLifeTime <= 0)
+            public override FixBug Create(Vector3 position, Quaternion rotation, Transform parent)
             {
-                FixedBug?.Invoke();
-                Destroy(gameObject);
-            }  
+                return _container.InstantiatePrefabForComponent<FixBug>(_bugPrefab, position, rotation, parent);
+            }
         }
     }
 }

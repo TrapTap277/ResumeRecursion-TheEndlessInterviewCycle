@@ -1,25 +1,32 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace _Scripts.Bug
 {
     public class FixBugUI : MonoBehaviour
     {
-        [SerializeField] private Slider slider;
+        private Slider _slider;
 
-        private void Fix(float lifetime)
+        [Inject]
+        public void Construct(Slider slider)
         {
-            slider.value = lifetime;
+            _slider = slider;
+        }
+
+        private void OnFixing(float lifetime)
+        {
+            _slider.value = lifetime;
         }
 
         private void OnEnable()
         {
-            FixBug.FixingBug += Fix;
+            FixBug.OnFixingBug += OnFixing;
         }
 
         private void OnDisable()
         {
-            FixBug.FixingBug -= Fix;
+            FixBug.OnFixingBug -= OnFixing;
         }
     }
 }
