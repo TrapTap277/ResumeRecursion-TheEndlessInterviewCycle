@@ -1,49 +1,67 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
+using _Scripts.Enemy.SO;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace _Scripts.Enemy.EnemyCreator
 {
-    public class CreateEnemies : MonoBehaviour
+    public class CreateEnemies : IInitializable
     {
-        private EnemyType _type;
-        private EnemySpecific _specific;
-        private EnemyCreator _creator;
+        private readonly List<Transform> _spawnPoints;
+        
+        private readonly EnemySo _enemySo;
 
-        private void Start()
+        private readonly List<EnemySo> _enemies;
+
+        public CreateEnemies(List<Transform> spawnPoints, List<EnemySo> enemies)
         {
-            _type = EnemyType.Crab;
-            _specific = EnemySpecific.Default;
-            StartCoroutine(Create());
+            _spawnPoints = spawnPoints;
+            _enemies = enemies;
         }
 
-        private IEnumerator Create()
+        public void Initialize()
         {
-            for (var i = 0; i < 3; i++)
-            {
-                _type = (EnemyType) i;
-                yield return new WaitForSeconds(Random.Range(1, 3));
-                SetEnemyCreator();
-                _creator.Create(_type);
-            }
+            Create();
         }
 
-        private void SetEnemyCreator()
+        public void Create()
         {
-            switch (_specific)
+            var randomEnemy = Random.Range(0, _enemies.Count);
+            var randomType = Random.Range(0, 3);
+            var enemyType = (EnemyType)randomType;
+            
+            var creator = SetEnemyCreator();
+            creator.SetSpawnPoints(_spawnPoints);
+            creator.Create(enemyType);
+        }
+
+        private EnemyCreator SetEnemyCreator()
+        {
+            EnemyCreator creator = null;
+
+            var specif = EnemySpecific.Bug;
+
+            switch (specif)
             {
-                case EnemySpecific.None: break;
+                case EnemySpecific.None:
+                    break;
                 case EnemySpecific.Default:
                 {
-                    _creator = new DefaultEnemyCreator();
+                    creator = new DefaultEnemyCreator();
                     break;
                 }
                 case EnemySpecific.Bug:
-                    _creator = new BugEnemyCreator();
+                    creator = new BugEnemyCreator();
                     break;
-                default: throw new ArgumentOutOfRangeException();
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+
+            if (creator != null) return creator;
+
+            return new DefaultEnemyCreator();
         }
     }
 }

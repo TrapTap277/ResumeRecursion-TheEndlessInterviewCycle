@@ -1,20 +1,17 @@
-﻿using UnityEngine;
+﻿using _Scripts.Enemy.EnemyCreator;
+using UnityEngine;
 
 namespace _Scripts.Enemy.SO
 {
     [CreateAssetMenu(menuName = "Enemy")]
     public class EnemySo : ScriptableObject
     {
-        [SerializeField] private GameObject prefab;
-        [SerializeField] private Material material;
         [SerializeField] private float health;
         [SerializeField] private float speed;
         [SerializeField] private float damage;
         [SerializeField] private float attackRange;
         [SerializeField] private float attackRadius;
 
-        public GameObject Prefab => prefab;
-        public Material Material => material;
         public float Health => health;
         public float Speed => speed;
         public float Damage => damage;
