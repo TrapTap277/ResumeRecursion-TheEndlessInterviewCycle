@@ -15,7 +15,7 @@ namespace _Scripts.Installers
         {
             Container.Bind<List<Transform>>().FromInstance(enemiesSpawnPoint);
             Container.Bind<EnemySo>().FromInstance(defaultEnemySo);
-            Container.BindInterfacesTo<CreateEnemies>();
+            Container.BindInterfacesTo<CreateEnemies>().AsSingle();
         }
     }
 }
