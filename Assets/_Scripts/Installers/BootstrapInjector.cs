@@ -11,9 +11,9 @@ namespace _Scripts.Installers
     {
         private IShowAdvertisement _showAdvertisement;
 
-        private readonly List<IInit> _inits = new();
+        private readonly List<IInit> _inits = new List<IInit>();
 
-        private readonly List<Installer> _installers = new();
+        private readonly List<Installer> _installers = new List<Installer>();
         
         private AdMobInstaller _adMobInstaller;
         private HeroInstaller _heroInstaller;

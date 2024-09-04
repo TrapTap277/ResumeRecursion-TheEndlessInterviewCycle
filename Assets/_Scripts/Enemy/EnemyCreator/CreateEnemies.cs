@@ -11,11 +11,13 @@ namespace _Scripts.Enemy.EnemyCreator
     {
         private readonly List<Transform> _spawnPoints;
         
-        private readonly EnemySo _enemySo;
+        private readonly EnemyStats _enemyStats;
 
-        private readonly List<EnemySo> _enemies;
+        private readonly List<EnemyStats> _enemies;
 
-        public CreateEnemies(List<Transform> spawnPoints, List<EnemySo> enemies)
+        private EnemySpecific _specific = EnemySpecific.Default;
+
+        public CreateEnemies(List<Transform> spawnPoints, List<EnemyStats> enemies)
         {
             _spawnPoints = spawnPoints;
             _enemies = enemies;
@@ -26,24 +28,33 @@ namespace _Scripts.Enemy.EnemyCreator
             Create();
         }
 
-        public void Create()
+        public void ChangeSpecificAndCreate(EnemySpecific specific)
         {
-            var randomEnemy = Random.Range(0, _enemies.Count);
-            var randomType = Random.Range(0, 3);
-            var enemyType = (EnemyType)randomType;
-            
+            _specific = specific;
+            Create();
+        }
+
+        private void Create()
+        {
+            var enemyType = SetRandomEnemy();
+
             var creator = SetEnemyCreator();
             creator.SetSpawnPoints(_spawnPoints);
-            creator.Create(enemyType);
+            creator.Create(enemyType.Type);
+        }
+
+        private EnemyStats SetRandomEnemy()
+        {
+            var randomEnemy = Random.Range(0, _enemies.Count);
+            var enemyType = _enemies[randomEnemy];
+            return enemyType;
         }
 
         private EnemyCreator SetEnemyCreator()
         {
             EnemyCreator creator = null;
 
-            var specif = EnemySpecific.Bug;
-
-            switch (specif)
+            switch (_specific)
             {
                 case EnemySpecific.None:
                     break;

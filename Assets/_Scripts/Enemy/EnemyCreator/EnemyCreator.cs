@@ -15,16 +15,16 @@ namespace _Scripts.Enemy.EnemyCreator
         protected const string GOLEM_PATH = "Prefabs/Golem";
         protected const string WATCHER_PATH = "Prefabs/Watcher";
 
-        private EnemySo _enemySo;
+        private EnemyStats _enemyStats;
 
         public void SetSpawnPoints(List<Transform> transforms)
         {
             _transforms = transforms;
         }
 
-        public void SetEnemyParameters(EnemySo enemySo)
+        public void SetEnemyParameters(EnemyStats enemyStats)
         {
-            _enemySo = enemySo;
+            _enemyStats = enemyStats;
         }
 
         public GameObject Create(EnemyType enemyType)
@@ -45,7 +45,7 @@ namespace _Scripts.Enemy.EnemyCreator
         {
             var randomPos = Random.Range(0, _transforms.Count);
             var currentEnemy = enemyObject.GetComponent<CurrentEnemy>();
-            currentEnemy.SetEnemy(_enemySo);
+            currentEnemy.SetEnemy(_enemyStats);
             var health = Object.FindObjectOfType<PlayerHealth>();
             enemyObject.transform.position = _transforms[randomPos].position;
 
